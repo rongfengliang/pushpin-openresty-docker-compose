@@ -1,0 +1,21 @@
+version: "3"
+services:
+  pushpin:
+    image: fanout/pushpin
+    environment:
+    - "target=api:8080"
+    - "LOGNAME=nobody"
+    volumes:
+    - "./routes:/etc/pushpin/routes"
+    ports:
+    - "5561:5561"
+    - "5562:5562"
+    - "5563:5563"
+    - "7999:7999"
+  api:
+    build: ./
+    ports:
+    - "8080:8080"
+    volumes:
+    - "./nginx_lua/:/opt/app/"
+    - "./nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf"
